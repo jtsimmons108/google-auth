@@ -1,0 +1,7 @@
+<p>login works!</p>
+<button (click)="signIn()">Sign in</button>
+<button (click)="signOut()">Sign out</button>
+<div *ngIf="googleUser">
+  <p>{{googleUser.getBasicProfile().getName() }}</p>
+  <p>{{googleUser.getBasicProfile().getEmail() }}</p>
+</div>
