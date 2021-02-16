@@ -21,41 +21,26 @@ export class LoginComponent implements OnInit {
         clientId: '180374672702-vad12pe1q4og9dr4mjra0hrsj57ol1im.apps.googleusercontent.com',
         apiKey: 'IsIXgFxGizBViqMq0VRPpfIb',
         scope: 'profile'
-      }).then(() => {
-        this.zone.run(() => {
-          console.log(this);
-          if (gapi.auth2.getAuthInstance().isSignedIn.get()){
-            this.googleUser = gapi.auth2.getAuthInstance().currentUser.get();
-          }
-        });
       });
     });
   }
 
-
+  setUser(user: GoogleUser): void{
+    this.googleUser = user;
+    console.log(user);
+  }
 
   signIn(): void{
-    console.log('signing in');
     if (!gapi.auth2.getAuthInstance().isSignedIn.get()){
-      gapi.auth2.getAuthInstance().signIn()
-        .then(() => {
-          this.zone.run(() => {
-            console.log('finished signing in');
-            this.setUser();
-          });
-        });
+      Promise.resolve(gapi.auth2.getAuthInstance().signIn())
+        .then((user) => this.setUser(user));
     }else{
-      this.setUser();
+      this.setUser(gapi.auth2.getAuthInstance().currentUser.get());
     }
   }
 
-  setUser(): void{
-    console.log('setting user');
-    this.googleUser = gapi.auth2.getAuthInstance().currentUser.get();
-  }
   signOut(): void{
     gapi.auth2.getAuthInstance().signOut();
-    // @ts-ignore
     this.googleUser = undefined;
   }
 

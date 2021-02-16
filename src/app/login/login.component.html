@@ -2,6 +2,12 @@
 <button (click)="signIn()">Sign in</button>
 <button (click)="signOut()">Sign out</button>
 <div *ngIf="googleUser">
-  <p>{{googleUser.getBasicProfile().getName() }}</p>
-  <p>{{googleUser.getBasicProfile().getEmail() }}</p>
+  <p>Name:  {{googleUser.getBasicProfile().getName() }}</p>
+  <p>Email:  {{googleUser.getBasicProfile().getEmail() }}</p>
+  <img src="{{googleUser.getBasicProfile().getImageUrl()}}">
+  <p>Access Token:  {{googleUser.getAuthResponse().access_token }}</p>
+  <p>ID Token:  {{googleUser.getAuthResponse().id_token}}</p>
+  <p>Expires In:  {{googleUser.getAuthResponse().expires_in }}</p>
+  <p>Expires At:  {{googleUser.getAuthResponse().expires_at }}</p>
+  <p>First Issued At:  {{googleUser.getAuthResponse().first_issued_at}}</p>
 </div>
